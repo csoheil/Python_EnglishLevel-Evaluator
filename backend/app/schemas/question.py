@@ -2,8 +2,7 @@
 
 from pydantic import BaseModel
 
-
-class QuestionResponse(BaseModel):
+class QuestionOut(BaseModel):
     id: int
     text: str
     option_a: str
