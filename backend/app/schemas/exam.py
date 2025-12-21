@@ -1,15 +1,16 @@
 # backend/app/schemas/exam.py
 
 from pydantic import BaseModel
-from typing import List
-from app.schemas.question import QuestionResponse
-
+from typing import List, Dict
 
 class ExamStartResponse(BaseModel):
     exam_id: int
-    questions: List[QuestionResponse]
+    questions: List[dict]
 
+class AnswerSubmission(BaseModel):
+    answers: Dict[int, str]  # question_id -> selected option
 
 class ExamResultResponse(BaseModel):
     score: int
+    total: int
     cefr_level: str
