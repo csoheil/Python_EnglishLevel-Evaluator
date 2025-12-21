@@ -4,27 +4,17 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.api.deps import get_current_user
-from app.models.exam import Exam
-from app.services.question_sampler import sample_questions
+from app.services.sampling import get_random_questions
 from app.schemas.exam import ExamStartResponse
+from app.schemas.question import QuestionOut
 
 router = APIRouter(prefix="/exams", tags=["Exams"])
 
-
 @router.post("/start", response_model=ExamStartResponse)
-def start_exam(
-    db: Session = Depends(get_db),
-    user=Depends(get_current_user)
-):
-    exam = Exam(user_id=user.id)
-    db.add(exam)
-    db.commit()
-    db.refresh(exam)
-
-    questions = sample_questions(db)
+def start_exam(db: Session = Depends(get_db)):
+    questions = get_random_questions(db)
 
     return {
-        "exam_id": exam.id,
-        "questions": questions
+        "exam_id": 1,
+        "questions": [QuestionOut.model_validate(q) for q in questions]
     }
