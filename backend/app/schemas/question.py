@@ -1,14 +1,13 @@
-# backend/app/schemas/question.py
-
 from pydantic import BaseModel
+from typing import Dict
 
-class QuestionOut(BaseModel):
-    id: int
-    text: str
-    option_a: str
-    option_b: str
-    option_c: str
-    option_d: str
 
-    class Config:
-        from_attributes = True
+class SubmitAnswersRequest(BaseModel):
+    exam_id: int
+    answers: Dict[int, str]  # question_id -> selected option
+
+
+class ResultResponse(BaseModel):
+    score: int
+    total: int
+    cefr_level: str
