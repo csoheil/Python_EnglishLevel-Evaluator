@@ -1,20 +1,16 @@
 # backend/app/core/config.py
 
-from pydantic import BaseSettings
+from pydantic import BaseModel
+from datetime import timedelta
 
 
-class Settings(BaseSettings):
-    PROJECT_NAME: str = "English Placement Test"
-    ENVIRONMENT: str = "development"
+class Settings(BaseModel):
+    PROJECT_NAME: str = "English Placement Test API"
 
-    DATABASE_URL: str = "postgresql+psycopg2://postgres:postgres@localhost:5432/placement_test"
-
-    JWT_SECRET_KEY: str = "CHANGE_ME"
+    # JWT
+    JWT_SECRET_KEY: str = "CHANGE_ME_SUPER_SECRET"
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
-
-    class Config:
-        env_file = ".env"
 
 
 settings = Settings()
