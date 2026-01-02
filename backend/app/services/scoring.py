@@ -1,13 +1,7 @@
-def calculate_score(questions, answers: dict) -> int:
-    score = 0
-    for question in questions:
-        submitted = answers.get(question.id)
-        if submitted and submitted.upper() == question.correct_option.upper():
-            score += 1
-    return score
-
-
-def map_score_to_cefr(score: int) -> str:
+def calculate_cefr_level(score: int) -> str:
+    """
+    Map score to CEFR level using fixed thresholds.
+    """
     if score <= 4:
         return "A1"
     if score <= 7:
